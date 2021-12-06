@@ -17,6 +17,7 @@ export class ContactDetailComponent implements OnInit {
   successMessage: string = 'Contact has been saved';
   showSuccessMessage: boolean = false;
   addErrorMessage: string = '';
+  showErrorMessage: boolean = false;
   public contactForm!: FormGroup;
   public pristineFlag$: BehaviorSubject<any> = new BehaviorSubject(true);
   isLoadingContact: boolean = false;
@@ -41,6 +42,7 @@ export class ContactDetailComponent implements OnInit {
   */
   saveContact() {
     this.pristineFlag$.next(false);
+    this.showErrorMessage = false;
     if (this.contactForm.valid) {
       this.isLoadingContact = true;
       const postJson = this.getPostJson();
@@ -110,6 +112,7 @@ export class ContactDetailComponent implements OnInit {
   */
   handleError(error: any) {
     this.isLoadingContact = false;
+    this.showErrorMessage = true;
     if (error.error['email']) {
       this.addErrorMessage = 'Email has already been taken';
     }

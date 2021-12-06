@@ -9,7 +9,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">#</th>
+        <!-- <th scope="col">#</th> -->
         <th scope="col">First Name</th>
         <th scope="col">Last Name</th>
         <th scope="col">Phone</th>
@@ -32,7 +32,7 @@
       <ng-container *ngIf="!isLoadingContacts">
         <ng-container *ngIf="totalCount > 0; else noDataBlock">
           <tr *ngFor="let item of contactList; let i = index">
-            <th scope="row">{{ i + 1 }}</th>
+            <!-- <th scope="row">{{ i + 1 }}</th> -->
             <td>{{ item.first_name }}</td>
             <td>{{ item.last_name }}</td>
             <td>{{ item.phone }}</td>
