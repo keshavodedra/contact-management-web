@@ -1,0 +1,27 @@
+<div>
+  <div
+    class="
+      modal-header
+      p-5
+      text-center
+      d-flex
+      align-items-center
+      justify-content-center
+    "
+  >
+  <h4 class="modal-title pull-left">{{ title }}</h4>
+  </div>
+  <div class="modal-footer bg-footer-modal d-flex justify-content-center">
+    <button type="button" class="btn btn-outline-primary" (click)="bsModalRef.hide()">
+      Close
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="confirm()"
+      [disabled]="isPosting"
+    >
+      Confirm
+    </button>
+  </div>
+</div>

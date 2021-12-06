@@ -1,0 +1,135 @@
+<div
+  class="modal popup sector-popup d-block"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  data-keyboard="false"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div>
+        <div
+          class="alert alert-success d-flex justify-content-center font-14"
+          role="alert"
+          *ngIf="showSuccessMessage"
+        >
+          {{ successMessage }}
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="addErrorMessage">
+          {{ addErrorMessage }}
+        </div>
+      </div>
+
+      <div class="modal-body p-5" *ngIf="!showSuccessMessage">
+        <div class="mb-3" *ngIf="mode === 'add'">
+          <strong class="h4 font-weight-bold">Add Contact</strong>
+        </div>
+        <div class="mb-3" *ngIf="mode === 'edit'">
+          <strong class="h4 font-weight-bold">Edit Contact</strong>
+        </div>
+
+        <div
+          class="d-flex justify-content-center p-5 w-100"
+          *ngIf="isLoadingContact"
+        >
+          <spinner></spinner>
+        </div>
+
+        <ng-container *ngIf="!isLoadingContact">
+          <form [formGroup]="contactForm">
+            <!--first name -->
+
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label"
+                >First Name</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                autocomplete="off"
+                [class.error-feild]="
+                  (!(pristineFlag$ | async) ||
+                    contactForm.controls['first_name'].touched) &&
+                  !contactForm.controls['first_name'].valid
+                "
+                formControlName="first_name"
+                placeholder="First Name"
+              />
+            </div>
+
+            <!--last name -->
+            <div class="mb-3">
+              <label for="exampleFormControlInput2" class="form-label"
+                >Last Name</label
+              >
+              <input
+                class="form-control"
+                type="text"
+                [class.error-feild]="
+                  (!(pristineFlag$ | async) ||
+                    contactForm.controls['last_name'].touched) &&
+                  !contactForm.controls['last_name'].valid
+                "
+                formControlName="last_name"
+                placeholder="Last Name"
+              />
+            </div>
+
+            <!--Email -->
+            <div class="mb-3">
+              <label for="exampleFormControlInput2" class="form-label"
+                >Email</label
+              >
+              <input
+                class="form-control"
+                type="text"
+                [class.error-feild]="
+                  (!(pristineFlag$ | async) ||
+                    contactForm.controls['email'].touched) &&
+                  !contactForm.controls['email'].valid
+                "
+                formControlName="email"
+                placeholder="Email"
+              />
+            </div>
+
+            <!--Phone -->
+            <div class="mb-3">
+              <label for="exampleFormControlInput2" class="form-label"
+                >Phone</label
+              >
+              <input
+                class="form-control"
+                type="text"
+                maxlength="11"
+                [class.error-feild]="
+                  (!(pristineFlag$ | async) ||
+                    contactForm.controls['phone'].touched) &&
+                  !contactForm.controls['phone'].valid
+                "
+                formControlName="phone"
+                placeholder="Phone Number"
+              />
+            </div>
+          </form>
+        </ng-container>
+      </div>
+
+      <!-- modal footer -->
+      <div class="px-5 pb-5" *ngIf="!showSuccessMessage">
+        <button
+          type="button"
+          class="btn btn-outline-primary mr-2"
+          (click)="closeModal()"
+        >
+          Cancel
+        </button>
+        <button (click)="saveContact()" type="button" class="btn btn-primary">
+          Submit
+        </button>
+      </div>
+      <!-- end modal footer -->
+    </div>
+  </div>
+</div>

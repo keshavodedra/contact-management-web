@@ -70,6 +70,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "factorial-hr:build",
+            "proxyConfig": "./proxy.config.json"
+          },
           "configurations": {
             "production": {
               "browserTarget": "contact-management-web:build:production"

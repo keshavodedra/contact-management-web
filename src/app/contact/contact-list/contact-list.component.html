@@ -1,0 +1,100 @@
+<div class="p-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <strong class="h5 font-weight-bold">All contact List</strong>
+    <a (click)="addEditContact()" class="btn btn-primary w-sm-100"
+      >Add Contact</a
+    >
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Email</th>
+        <th scope="col">Entry Date</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="isLoadingContacts">
+        <tr>
+          <td colspan="7">
+            <div class="d-flex justify-content-center p-5 w-100">
+              <spinner></spinner>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+
+      <ng-container *ngIf="!isLoadingContacts">
+        <ng-container *ngIf="totalCount > 0; else noDataBlock">
+          <tr *ngFor="let item of contactList; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ item.first_name }}</td>
+            <td>{{ item.last_name }}</td>
+            <td>{{ item.phone }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.created_at | date: "medium" }}</td>
+            <td>
+              <button
+                class="btn btn-outline-primary btn-sm mr-2"
+                (click)="viewContactHistory(item)"
+              >
+                <i class="zmdi zmdi-eye"></i>
+              </button>
+              <button
+                class="btn btn-outline-primary btn-sm mr-2"
+                (click)="addEditContact('edit', item)"
+              >
+                <i class="zmdi zmdi-edit"></i>
+              </button>
+              <button
+                class="btn btn-outline-primary btn-sm"
+                (click)="openConfirmDeleteModal(item.id)"
+              >
+                <i class="zmdi zmdi-delete"></i>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-template #noDataBlock>
+          <tr>
+            <td colspan="7">
+              <div class="text-bx text-dark text-center">No Contacts</div>
+            </td>
+          </tr>
+        </ng-template>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <div *ngIf="totalCount > 10">
+    <pagination-row
+      url="_"
+      (onPageChange)="loadPage($event)"
+      [page$]="currentPage$"
+      [totalRecords]="totalRecords$"
+    ></pagination-row>
+  </div>
+
+  <!-- Add Edit Contact :START -->
+  <app-contact-detail
+    *ngIf="showModal"
+    [mode]="modalMode"
+    [data]="currentItem"
+    (submitContact)="saveContact()"
+    (closeContactModal)="this.showModal = false"
+  ></app-contact-detail>
+  <!-- Add Edit Contact :END -->
+
+  <!-- Add Edit Contact :START -->
+  <app-contact-history
+    *ngIf="showHistoryModal"
+    [data]="currentItem"
+    (closeContactHistoryModal)="this.showHistoryModal = false"
+  ></app-contact-history>
+  <!-- Add Edit Contact :END -->
+</div>

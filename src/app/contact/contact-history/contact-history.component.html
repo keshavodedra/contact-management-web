@@ -1,0 +1,55 @@
+<div
+  class="modal popup sector-popup d-block"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  data-keyboard="false"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-5">
+        <div class="mb-3">
+          <strong class="h4 font-weight-bold">Contact History</strong>
+        </div>
+        <ng-container *ngIf="data?.log_histories.length > 0; else noDateBlock">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of data?.log_histories; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td [ngStyle]="{'color': getchange(item, 'first_name') ? 'red' : ''}">{{ item?.old_values?.first_name }}</td>
+                <td [ngStyle]="{'color': getchange(item, 'last_name') ? 'red' : ''}">{{ item?.old_values?.last_name }}</td>
+                <td [ngStyle]="{'color': getchange(item, 'phone') ? 'red' : ''}">{{ item?.old_values?.phone }}</td>
+                <td [ngStyle]="{'color': getchange(item, 'email') ? 'red' : ''}">{{ item?.old_values?.email }}</td>
+                <td [ngStyle]="{'color': getchange(item, '') ? 'red' : ''}">{{ item?.created_at | date: 'medium'  }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-template #noDateBlock>
+          <div class="work-light">
+              <div class="text-bx text-dark text-center">
+                 No Contact History
+              </div>
+          </div>
+      </ng-template>
+      </div>
+
+      <div class="px-5 pb-5">
+        <button type="button" class="btn btn-outline-primary mr-2" (click)="closeModal()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

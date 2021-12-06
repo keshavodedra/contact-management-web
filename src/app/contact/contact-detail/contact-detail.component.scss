@@ -1,0 +1,8 @@
+::ng-deep {
+  .modal {
+      background: rgba(0, 0, 0, 0.5) !important;
+  }
+}
+.error-feild{
+  border: 1px solid var(--required-color) !important;  
+}
